@@ -11,7 +11,7 @@ export default styles = StyleSheet.create({
     task: {
         height: 'auto',
         width: "100%",
-        backgroundColor: "#6B8A7A",
+        backgroundColor: "#E8EAED",
         padding: 8,
         marginTop: 8,
         marginBottom: 8,
@@ -24,7 +24,7 @@ export default styles = StyleSheet.create({
     taskView: {
         height: 'auto',
         width: "85%",
-        backgroundColor: "#6B8A7A",
+        backgroundColor: "#E8EAED",
         padding: 8,
         marginTop: 8,
         marginBottom: 8,
@@ -38,7 +38,7 @@ export default styles = StyleSheet.create({
 
     taskDescText: {
         fontSize: 14,
-        color: 'white',
+        color: '#000000',
     },
 
     centeredView: {
@@ -52,7 +52,7 @@ export default styles = StyleSheet.create({
         bottom: 15,
         right: 15,
         position: 'absolute',
-        alignItems: 'center',
+        alignItems: 'center'
     },
 
        switchView:{
@@ -60,7 +60,7 @@ export default styles = StyleSheet.create({
        },
     
        switchText:{
-        marginTop: 7,
+        marginTop: 13,
         fontSize: 15
-       },
+       }
 })

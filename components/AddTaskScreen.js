@@ -1,33 +1,26 @@
-import { Text, View, Button, TextInput, Platform } from 'react-native';
+import { Text, View, Button, TextInput, Platform, TouchableOpacity } from 'react-native';
 import styles from '../styles/AddTaskScreen'
 import { useState } from 'react';
 
-export default function AddTaskScreen({setTasks}) {
+export default function AddTaskScreen({ setTasks }) {
     const [task, setTask] = useState('');
-    const [error, setError] = useState('');
-  
+    const [isError, setIsError] = useState(true);
+
 
     const handleTaskChange = (value) => {
         setTask(value)
         if (value != '') {
-            setError('');
+            setIsError('');
         }
     }
 
     const handleTaskAdded = () => {
         if (task == '') {
-            setError("Description should not be empty!!");
+            setIsError(true);
         } else {
-            setError("");
+            setIsError(false);
             setTask('');
             setTasks(task)
-           // setTasks(task);
-           // setTaskDesc("");
-           // setSuccessText("Added Successfully")
-            // setTimeout(()=>{
-            //     setSuccessText("")
-            // },2000);
-            
         }
     }
 
@@ -41,13 +34,21 @@ export default function AddTaskScreen({setTasks}) {
                     onChangeText={handleTaskChange}>
                 </TextInput>
 
-                <View style={styles.addTaskbutton}>
-                    <Button
-                        title='Add Task'
-                        onPress={() => handleTaskAdded()}
-                        color={Platform.OS == 'ios' ? 'white' : 'green'}
-                    />
-                </View>
+                <TouchableOpacity
+                    style={[
+                        styles.addTaskbutton,
+                        { backgroundColor: isError ? 'grey' : 'green' }
+                    ]}
+                    onPress={() => handleTaskAdded()}
+                    disabled={isError}
+                >
+                    <Text style={[
+                        styles.buttonText,
+                        { color: isError ? 'red' : 'white' }
+                    ]}>
+                        Add Task
+                    </Text>
+                </TouchableOpacity>
             </View>
             <TextInput></TextInput>
         </View>
