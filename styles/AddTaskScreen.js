@@ -21,12 +21,9 @@ export default styles = StyleSheet.create({
 
   addTaskbutton: {
     width: "92%",
-    margin: 16,
-    borderRadius: 10,
-    padding: 10,
-    alignItems: 'center',
-  },
-  buttonText: {
     fontSize: 14,
-  }
+    margin: 16,
+    backgroundColor: 'green',
+    borderRadius: 10 
+}
 })

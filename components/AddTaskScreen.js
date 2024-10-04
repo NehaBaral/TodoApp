@@ -1,28 +1,37 @@
 import { Text, View, Button, TextInput, Platform, TouchableOpacity } from 'react-native';
 import styles from '../styles/AddTaskScreen'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function AddTaskScreen({ setTasks }) {
     const [task, setTask] = useState('');
-    const [isError, setIsError] = useState(true);
-
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleTaskChange = (value) => {
         setTask(value)
-        if (value != '') {
-            setIsError('');
-        }
+        setIsButtonDisabled(value.trim() === '');
     }
 
     const handleTaskAdded = () => {
         if (task == '') {
-            setIsError(true);
+            setIsButtonDisabled(true);
         } else {
-            setIsError(false);
+            setIsButtonDisabled(true);
             setTask('');
             setTasks(task)
+            setShowSuccess(true);
         }
     }
+
+    useEffect(() => {
+        let timer;
+        if (showSuccess) {
+            timer = setTimeout(() => {
+                setShowSuccess(false);
+            }, 5000);
+        }
+        return () => clearTimeout(timer);
+    }, [showSuccess]);
 
     return (
         <View style={styles.taskForm}>
@@ -34,21 +43,20 @@ export default function AddTaskScreen({ setTasks }) {
                     onChangeText={handleTaskChange}>
                 </TextInput>
 
-                <TouchableOpacity
-                    style={[
-                        styles.addTaskbutton,
-                        { backgroundColor: isError ? 'grey' : 'green' }
-                    ]}
-                    onPress={() => handleTaskAdded()}
-                    disabled={isError}
-                >
-                    <Text style={[
-                        styles.buttonText,
-                        { color: isError ? 'red' : 'white' }
-                    ]}>
-                        Add Task
+                <View style={styles.addTaskbutton}>
+                    <Button
+                        title='Add Task'
+                        onPress={() => handleTaskAdded()}
+                        disabled={isButtonDisabled}
+                        color={Platform.OS == 'ios' ? 'white' : 'green'}
+                        backgroundColor= 'green'
+                    />
+                </View>
+                {showSuccess && (
+                    <Text style={{textAlign: 'center', color: 'green', marginTop: 10}}>
+                        Added Successfully
                     </Text>
-                </TouchableOpacity>
+                )}
             </View>
             <TextInput></TextInput>
         </View>
